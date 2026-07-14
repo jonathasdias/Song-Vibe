@@ -8,6 +8,7 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import Loading from "../Loading/Loading";
 import { useCreateAlbum } from "@/hooks/supabase/useCreateAlbum";
+import { toast } from "sonner";
 
 
 interface CreateAlbumFormType {
@@ -26,7 +27,7 @@ export default function FormCreateAlbum({ className, setOpen }: CreateAlbumFormT
     e.preventDefault();
     
     if (titleAlbum.trim() === "") {
-        alert("O título não pode ser vazio.");
+        toast("O título não pode ser vazio.");
         return;
     }
 
@@ -45,7 +46,7 @@ export default function FormCreateAlbum({ className, setOpen }: CreateAlbumFormT
       console.error("Erro ao criar álbum:", error.message);
       alert("Erro ao criar álbum");
     } else {
-      alert("Álbum criado com sucesso!");
+      toast("Álbum criado com sucesso!");
       setOpen(false);
     }
   }

@@ -22,7 +22,7 @@ export default async function Dashboard() {
         🎵 Albuns
       </h1>
 
-      <section>
+      <section className="p-4">
         <div className="flex justify-between items-center border-b border-gray-400 p-2">
           <p>
             <b>Albuns:</b> {albuns?.length}
