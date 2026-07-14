@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -10,29 +10,34 @@ import Loading from "../Loading/Loading";
 import { useCreateAlbum } from "@/hooks/supabase/useCreateAlbum";
 import { toast } from "sonner";
 
-
 interface CreateAlbumFormType {
   className?: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function FormCreateAlbum({ className, setOpen }: CreateAlbumFormType) {
+export default function FormCreateAlbum({
+  className,
+  setOpen,
+}: CreateAlbumFormType) {
   const [titleAlbum, setTitleAlbum] = useState<string>("");
 
   const supabase = createClient();
 
   const { mutate: createAlbum, isPending, error } = useCreateAlbum();
-  
+
   async function handleCreateAlbum(e: React.ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
-    
+
     if (titleAlbum.trim() === "") {
-        toast("O título não pode ser vazio.");
-        return;
+      toast("O título não pode ser vazio.");
+      return;
     }
 
-    const { data: {user}, error: userError } = await supabase.auth.getUser();
-        
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
     if (userError || !user) {
       console.error("Usuário não autenticado");
       alert("Você precisa estar logado para criar um álbum.");
@@ -61,7 +66,9 @@ export default function FormCreateAlbum({ className, setOpen }: CreateAlbumFormT
         <Input
           type="text"
           id="titleAlbum"
-          onChange={(e:React.ChangeEvent<HTMLInputElement>) => setTitleAlbum(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setTitleAlbum(e.target.value)
+          }
           minLength={2}
           maxLength={30}
           required
@@ -70,4 +77,4 @@ export default function FormCreateAlbum({ className, setOpen }: CreateAlbumFormT
       {isPending ? <Loading /> : <Button>Criar</Button>}
     </form>
   );
-};
+}

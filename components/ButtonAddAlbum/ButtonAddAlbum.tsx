@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -70,4 +70,4 @@ export default function ButtonAddAlbum() {
       </DrawerContent>
     </Drawer>
   );
-};
+}

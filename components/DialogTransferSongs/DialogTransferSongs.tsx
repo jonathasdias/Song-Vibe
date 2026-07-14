@@ -33,7 +33,6 @@ export function DialogTransferSongs({
   fromAlbumId,
   songId,
 }: DialogTransferSongsProps) {
-
   const [toAlbumId, setToAlbumId] = useState("");
 
   const { mutate: transferAll, isPending: isTransferringAll } =
@@ -60,7 +59,7 @@ export function DialogTransferSongs({
         {
           onSuccess: () => toast.success("Música transferida com sucesso!"),
           onError: (err) => toast.error(`Erro: ${(err as Error).message}`),
-        }
+        },
       );
     } else if (fromAlbumId) {
       // transferir todas as músicas
@@ -70,7 +69,7 @@ export function DialogTransferSongs({
           onSuccess: () =>
             toast.success("Todas as músicas foram transferidas!"),
           onError: (err) => toast.error(`Erro: ${(err as Error).message}`),
-        }
+        },
       );
     }
   };
@@ -86,11 +85,7 @@ export function DialogTransferSongs({
           title={songId ? "Mover música" : "Mover todas as músicas"}
           aria-label={songId ? "Mover música" : "Mover todas as músicas"}
         >
-          {songId ? (
-            <FileInput size={18} />
-          ) : (
-            <FileSliders size={18} />
-          )}
+          {songId ? <FileInput size={18} /> : <FileSliders size={18} />}
         </Button>
       </DialogTrigger>
 

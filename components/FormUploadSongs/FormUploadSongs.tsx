@@ -44,7 +44,7 @@ export default function FormUploadSongs({ albumId }: UploadSongFormProps) {
         <DialogHeader>
           <DialogTitle>Adicionar músicas ao seu álbum</DialogTitle>
           <DialogDescription>
-           {` O nome da música deve ser único. Músicas duplicadas serão ignoradas.
+            {` O nome da música deve ser único. Músicas duplicadas serão ignoradas.
             Clique em "Salvar" quando terminar.`}
           </DialogDescription>
         </DialogHeader>
@@ -77,4 +77,4 @@ export default function FormUploadSongs({ albumId }: UploadSongFormProps) {
       </DialogContent>
     </Dialog>
   );
-};
+}
