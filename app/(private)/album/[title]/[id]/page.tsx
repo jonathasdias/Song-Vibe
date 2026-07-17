@@ -37,7 +37,7 @@ export default function MyAlbum() {
 
   return (
     <main className="p-6">
-      {songs && songs.length > 0 && <Miniplayer songs={songs} />}
+      {songs && songs.length > 0 && <Miniplayer />}
 
       <MoveLeft
         className="cursor-pointer"

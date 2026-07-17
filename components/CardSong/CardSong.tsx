@@ -1,6 +1,6 @@
 "use client";
 
-import { Pause, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import { ArrowDownFromLine } from "lucide-react";
 import { Trash2 } from "lucide-react";
 import { CirclePlus } from "lucide-react";
@@ -12,7 +12,7 @@ import Image from "next/image";
 import { useAllAlbuns } from "@/hooks/supabase/useAllAlbuns";
 import { DialogTransferSongs } from "../DialogTransferSongs/DialogTransferSongs";
 import { toast } from "sonner";
-import { useRef, useState } from "react";
+import useSongPlayer from "@/hooks/supabase/useSongPlayer";
 
 interface CardSongTypes {
   songs: SongType[];
@@ -42,32 +42,7 @@ export default function CardSong({ songs }: CardSongTypes) {
     }
   };
 
-  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
-  const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
-
-  const togglePlay = (index: number) => {
-    const audio = audioRefs.current[index];
-
-    if (!audio) return;
-
-    // Se clicou na música que já está tocando
-    if (playingIndex === index) {
-      audio.pause();
-      setPlayingIndex(null);
-      return;
-    }
-
-    // Pausa a música anterior
-    if (playingIndex !== null) {
-      audioRefs.current[playingIndex]?.pause();
-    }
-
-    // Reinicia a nova música
-    audio.currentTime = 0;
-    audio.play();
-
-    setPlayingIndex(index);
-  };
+  const { playSong } = useSongPlayer();
 
   return songs?.length === 0 ? (
     <p className="text-4xl text-gray-400 text-center font-extrabold p-10 col-span-2 md:col-span-4">
@@ -98,13 +73,13 @@ export default function CardSong({ songs }: CardSongTypes) {
 
           <div className="grid grid-cols-4 justify-items-center items-center gap-3">
             <Button
-              onClick={() => togglePlay(index)}
+              onClick={() => playSong(song, songs)}
               className="size-9 md:size-10 grid place-items-center rounded-full bg-white text-black"
               aria-label="selecionar musica"
               title="Selecionar musica"
               variant="secondary"
             >
-              {playingIndex === index ? <Pause /> : <Play />}
+              <Play />
             </Button>
             <Button
               className="size-9 md:size-10 text-blue-600"
@@ -139,15 +114,6 @@ export default function CardSong({ songs }: CardSongTypes) {
             </Button>
           </div>
         </div>
-
-        <audio
-          ref={(el) => {
-            audioRefs.current[index] = el;
-          }}
-          src={song.url}
-          onEnded={() => setPlayingIndex(null)}
-          preload="metadata"
-        />
       </li>
     ))
   );
